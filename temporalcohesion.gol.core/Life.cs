@@ -33,7 +33,7 @@ namespace temporalcohesion.gol.core
         {
             var random = new Random(_seed);
 
-            return ((x*y + random.Next())%2) == 0;
+            return ((x * y + random.Next()) % 2) == 0;
         }
     }
 }
