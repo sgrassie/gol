@@ -1,9 +1,14 @@
-﻿namespace temporalcohesion.gol.core
+﻿using System;
+
+namespace temporalcohesion.gol.core
 {
     public class Life
     {
-        public Life(int size = 100)
+        private readonly int _seed;
+
+        public Life(int seed, int size)
         {
+            _seed = seed;
             PopulateGrid(size);
         }
 
@@ -18,9 +23,17 @@
                 for (var j = 0; j < size; j++)
                 {
                     var cell = new Cell(i, j, Grid);
+                    cell.Alive = AliveOrDead(i, j);
                     Grid[i, j] = cell;
                 }
             }
+        }
+
+        private bool AliveOrDead(int x, int y)
+        {
+            var random = new Random(_seed);
+
+            return ((x*y + random.Next())%2) == 0;
         }
     }
 }

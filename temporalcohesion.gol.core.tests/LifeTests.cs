@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace temporalcohesion.gol.core.tests
@@ -9,7 +10,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Initialise_Life_Wtih_Default_HundredByHundred_Grid()
         {
-            var life = new Life();
+            var life = new Life(0, 100);
 
             life.Grid.Length.Should().Be(10000);
         }
@@ -17,7 +18,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Initialise_Grid_With_Custom_Size()
         {
-            var life = new Life(10);
+            var life = new Life(1, 10);
 
             life.Grid.Length.Should().Be(100);
         }
@@ -25,7 +26,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Initialise_All_Cells_In_Grid()
         {
-            var life = new Life(2);
+            var life = new Life(1, 2);
 
             var grid = life.Grid;
 
@@ -38,7 +39,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Create_Cell_Which_Knows_Its_Position()
         {
-            var life = new Life(2);
+            var life = new Life(1, 2);
 
             var cell = life.Grid[1, 1];
 
@@ -50,7 +51,7 @@ namespace temporalcohesion.gol.core.tests
         public void Should_Create_Cell_Which_Knows_Its_Neighbours()
         {
             // 3 x 3 grid of 9 cells
-            var life = new Life(3);
+            var life = new Life(1, 3);
 
             // the center cell
             var cell = life.Grid[1, 1];
@@ -70,7 +71,7 @@ namespace temporalcohesion.gol.core.tests
         public void Should_Create_Top_Left_Corner_Cell_Which_Knows_Its_Neighbours()
         {
             // 3 x 3 grid of 9 cells
-            var life = new Life(3);
+            var life = new Life(1, 3);
 
             // the top left corner cell
             var cell = life.Grid[0, 0];
@@ -82,7 +83,7 @@ namespace temporalcohesion.gol.core.tests
         public void Should_Create_Bottom_Right_Corner_Cell_Which_Knows_Its_Neighbours()
         {
             // 3 x 3 grid of 9 cells
-            var life = new Life(3);
+            var life = new Life(1, 3);
 
             // the bottm right corner cell
             var cell = life.Grid[2, 2];
@@ -95,12 +96,23 @@ namespace temporalcohesion.gol.core.tests
         public void Should_Create_Edge_Cell_Which_Knows_Its_Neighbours()
         {
             // 3 x 3 grid of 9 cells
-            var life = new Life(3);
+            var life = new Life(1, 3);
 
             // the middle left cell
             var cell = life.Grid[0, 1];
             
             cell.Neighbours.Count.Should().Be(5);
+        }
+
+        [Test]
+        public void Should_Create_Cells_Which_Are_Alive_And_Dead()
+        {
+            var life = new Life(1, 3);
+
+            var list = life.Grid.Cast<Cell>().ToList();
+
+            list.Count(x => x.Alive).Should().BeGreaterThan(0);
+            list.Count(x => !x.Alive).Should().BeGreaterThan(0);
         }
     }
 }
