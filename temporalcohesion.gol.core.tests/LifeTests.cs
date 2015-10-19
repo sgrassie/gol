@@ -56,15 +56,8 @@ namespace temporalcohesion.gol.core.tests
             // the center cell
             var cell = life.Grid[1, 1];
 
-            cell.Neighbours.Count.Should().Be(8);
-            cell.Neighbours[0].Should().NotBeNull();
-            cell.Neighbours[1].Should().NotBeNull();
-            cell.Neighbours[2].Should().NotBeNull();
-            cell.Neighbours[3].Should().NotBeNull();
-            cell.Neighbours[4].Should().NotBeNull();
-            cell.Neighbours[5].Should().NotBeNull();
-            cell.Neighbours[6].Should().NotBeNull();
-            cell.Neighbours[7].Should().NotBeNull();
+            var neighbours = cell.GetNeighbours(life.Grid);
+            neighbours.Count.Should().Be(8);
         }
 
         [Test]
@@ -76,7 +69,7 @@ namespace temporalcohesion.gol.core.tests
             // the top left corner cell
             var cell = life.Grid[0, 0];
             
-            cell.Neighbours.Count.Should().Be(3);
+            cell.GetNeighbours(life.Grid).Count.Should().Be(3);
         }
 
         [Test]
@@ -88,8 +81,7 @@ namespace temporalcohesion.gol.core.tests
             // the bottm right corner cell
             var cell = life.Grid[2, 2];
             
-            cell.Neighbours.Count.Should().Be(3);
-            
+            cell.GetNeighbours(life.Grid).Count.Should().Be(3);
         }
 
         [Test]
@@ -101,7 +93,7 @@ namespace temporalcohesion.gol.core.tests
             // the middle left cell
             var cell = life.Grid[0, 1];
             
-            cell.Neighbours.Count.Should().Be(5);
+            cell.GetNeighbours(life.Grid).Count.Should().Be(5);
         }
 
         [Test]
@@ -113,6 +105,84 @@ namespace temporalcohesion.gol.core.tests
 
             list.Count(x => x.Alive).Should().BeGreaterThan(0);
             list.Count(x => !x.Alive).Should().BeGreaterThan(0);
+        }
+
+        [Test]
+        public void Should_Evaluate_First_Rule_Of_Life()
+        {
+            var life = new Life(1, 3);
+            life.Grid[0, 0].Alive = true;
+            life.Grid[1, 0].Alive = true;
+            life.Grid[0, 1].Alive = false;
+            life.Grid[1, 1].Alive = false;
+
+            life.Tick();
+
+            life.Grid[0, 0].Alive.Should().BeFalse();
+        }
+
+        [Test]
+        public void Should_Evaluate_Second_Rule_Of_Life()
+        {
+            var life = new Life(1, 3);
+            life.Grid[0, 0].Alive = true;
+            life.Grid[0, 1].Alive = true;
+            life.Grid[0, 2].Alive = true;
+            life.Grid[1, 0].Alive = true;
+            life.Grid[1, 1].Alive = true;
+
+            life.Tick();
+
+            life.Grid[0, 1].Alive.Should().BeFalse();
+
+        }
+
+        [Test]
+        public void Should_Evaluate_Third_Rule_Of_Life_For_Two_Alive_Neighbours()
+        {
+            var life = new Life(1, 3);
+            life.Grid[0, 0].Alive = true;
+            life.Grid[0, 1].Alive = true;
+            life.Grid[0, 2].Alive = false;
+            life.Grid[1, 0].Alive = true;
+            life.Grid[1, 1].Alive = false;
+            life.Grid[1, 2].Alive = false;
+
+            life.Tick();
+
+            life.Grid[0, 1].Alive.Should().BeTrue();
+        }
+
+        [Test]
+        public void Should_Evaluate_Third_Rule_Of_Life_For_Three_Alive_Neighbours()
+        {
+            var life = new Life(1, 3);
+            life.Grid[0, 0].Alive = true;
+            life.Grid[0, 1].Alive = true;
+            life.Grid[0, 2].Alive = true;
+            life.Grid[1, 0].Alive = true;
+            life.Grid[1, 1].Alive = false;
+            life.Grid[1, 2].Alive = false;
+
+            life.Tick();
+
+            life.Grid[0, 1].Alive.Should().BeTrue();
+        }
+
+        [Test]
+        public void Should_Evaluate_Fourth_Rule_Of_Life()
+        {
+            var life = new Life(1, 3);
+            life.Grid[0, 0].Alive = true;
+            life.Grid[0, 1].Alive = false;
+            life.Grid[0, 2].Alive = true;
+            life.Grid[1, 0].Alive = true;
+            life.Grid[1, 1].Alive = false;
+            life.Grid[1, 2].Alive = false;
+
+            life.Tick();
+
+            life.Grid[0, 1].Alive.Should().BeTrue();
         }
     }
 }
