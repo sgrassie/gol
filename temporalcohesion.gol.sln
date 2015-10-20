@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "temporalcohesion.gol.core.t
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{76340C34-410D-4E0A-9C29-A64A421E57A2}"
 	ProjectSection(SolutionItems) = preProject
-		rules.txt = rules.txt
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "temporalcohesion.gol.winforms", "temporalcohesion.gol.winforms\temporalcohesion.gol.winforms.csproj", "{7AC9B8F8-026A-450D-BB2B-D77CD4C6366C}"

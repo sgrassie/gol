@@ -20,7 +20,7 @@ namespace temporalcohesion.gol.winforms
             var boardSize = 100;
 
             InitializeComponent();
-            _life = new Life(42, boardSize);
+            _life = new Life(boardSize, boardSize, new DefaultGridPopulationStrategy(42));
 
             for (var i = 0; i < boardSize; i++)
             {

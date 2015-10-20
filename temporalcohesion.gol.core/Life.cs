@@ -1,26 +1,20 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 
 namespace temporalcohesion.gol.core
 {
     public class Life
     {
-        private readonly int _seed;
-        private readonly int _size;
-
-        public Life(int seed, int size)
+        public Life(int x, int y, IGridPopulationStrategy gridPopulationStrategy)
         {
-            _seed = seed;
-            _size = size;
-            PopulateGrid(size);
+            Grid = gridPopulationStrategy.Populate(x, y);
         }
 
         public Cell[,] Grid { get; set; }
 
         public void Tick()
         {
-            var nextGrid = new Cell[_size, _size];
+            var nextGrid = new Cell[Grid.GetUpperBound(0)+1, Grid.GetUpperBound(1)+1];
 
             foreach (var cell in Grid)
             {
@@ -47,23 +41,9 @@ namespace temporalcohesion.gol.core
             Grid = nextGrid;
         }
 
-        private void PopulateGrid(int size)
-        {
-            Grid = new Cell[size, size];
-
-            for (var i = 0; i < size; i++)
-            {
-                for (var j = 0; j < size; j++)
-                {
-                    var cell = new Cell(j, i) {Alive = AliveOrDead(j, i)};
-                    Grid[j, i] = cell;
-                }
-            }
-        }
-
         private Cell[,] CreateCopy(Cell[,] grid)
         {
-            var copy = new Cell[_size, _size];
+            var copy= new Cell[Grid.GetUpperBound(0)+1, Grid.GetUpperBound(1)+1];
 
             foreach (var cell in grid)
             {
@@ -71,13 +51,6 @@ namespace temporalcohesion.gol.core
             }
 
             return copy;
-        }
-
-        private bool AliveOrDead(int x, int y)
-        {
-            var random = new Random(_seed);
-
-            return (((x ^ y) + random.Next()) % 5) == 0;
         }
 
         public override string ToString()
