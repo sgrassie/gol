@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "temporalcohesion.gol.winforms", "temporalcohesion.gol.winforms\temporalcohesion.gol.winforms.csproj", "{7AC9B8F8-026A-450D-BB2B-D77CD4C6366C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "temporalcohesion.gol.console", "temporalcohesion.gol.console\temporalcohesion.gol.console.csproj", "{F9231837-51F2-4EBF-BD53-895EEC25F7E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{7AC9B8F8-026A-450D-BB2B-D77CD4C6366C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AC9B8F8-026A-450D-BB2B-D77CD4C6366C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AC9B8F8-026A-450D-BB2B-D77CD4C6366C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9231837-51F2-4EBF-BD53-895EEC25F7E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9231837-51F2-4EBF-BD53-895EEC25F7E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9231837-51F2-4EBF-BD53-895EEC25F7E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9231837-51F2-4EBF-BD53-895EEC25F7E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

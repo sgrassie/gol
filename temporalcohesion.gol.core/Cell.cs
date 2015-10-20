@@ -24,8 +24,8 @@ namespace temporalcohesion.gol.core
                 {
                     if (i < 0) continue;
                     if (j < 0) continue;
-                    if (i == grid.Rank + 1) continue;
-                    if (j == grid.Rank + 1) continue;
+                    if (i > grid.GetUpperBound(0)) continue;
+                    if (j > grid.GetUpperBound(1)) continue;
 
                     if (!(i == X && j == Y))
                     {

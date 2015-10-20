@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace temporalcohesion.gol.core
 {
@@ -55,8 +55,8 @@ namespace temporalcohesion.gol.core
             {
                 for (var j = 0; j < size; j++)
                 {
-                    var cell = new Cell(i, j) {Alive = AliveOrDead(i, j)};
-                    Grid[i, j] = cell;
+                    var cell = new Cell(j, i) {Alive = AliveOrDead(j, i)};
+                    Grid[j, i] = cell;
                 }
             }
         }
@@ -77,7 +77,29 @@ namespace temporalcohesion.gol.core
         {
             var random = new Random(_seed);
 
-            return ((x * y + random.Next()) % 2) == 0;
+            return (((x ^ y) + random.Next()) % 5) == 0;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+
+            var xBounds = Grid.GetUpperBound(0);
+            var yBounds = Grid.GetUpperBound(1);
+
+            for (var i = 0; i <= xBounds; i++)
+            {
+                for (var j = 0; j <= yBounds; j++)
+                {
+                    var cell = Grid[j, i];
+                    sb.AppendFormat("{0} ", cell.Alive ? "+" : ".");
+                    //sb.AppendFormat("|{0},{1}", cell.X, cell.Y);
+                }
+
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
         }
     }
 }

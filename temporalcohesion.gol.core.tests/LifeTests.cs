@@ -61,6 +61,41 @@ namespace temporalcohesion.gol.core.tests
         }
 
         [Test]
+        public void Should_Get_Cell_Neighbours_In_FiveByFiveGrid()
+        {
+            var life = new Life(1, 5);
+
+            var cell = life.Grid[2, 1];
+            var neighbours = cell.GetNeighbours(life.Grid);
+
+            neighbours.Count.Should().Be(8);
+            neighbours.Should().Contain(c => c.X == 1 && c.Y == 0);
+            neighbours.Should().Contain(c => c.X == 1 && c.Y == 1);
+            neighbours.Should().Contain(c => c.X == 1 && c.Y == 2);
+            neighbours.Should().Contain(c => c.X == 2 && c.Y == 0);
+            neighbours.Should().Contain(c => c.X == 2 && c.Y == 2);
+            neighbours.Should().Contain(c => c.X == 3 && c.Y == 0);
+            neighbours.Should().Contain(c => c.X == 3 && c.Y == 1);
+            neighbours.Should().Contain(c => c.X == 3 && c.Y == 2);
+        }
+
+        [Test]
+        public void Should_Get_Cell_Neighbours_Near_Edge_In_FiveByFiveGrid()
+        {
+            var life = new Life(1, 5);
+
+            var cell = life.Grid[2, 0];
+            var neighbours = cell.GetNeighbours(life.Grid);
+
+            neighbours.Count.Should().Be(5);
+            neighbours.Should().Contain(c => c.X == 1 && c.Y == 0);
+            neighbours.Should().Contain(c => c.X == 1 && c.Y == 1);
+            neighbours.Should().Contain(c => c.X == 2 && c.Y == 1);
+            neighbours.Should().Contain(c => c.X == 3 && c.Y == 0);
+            neighbours.Should().Contain(c => c.X == 3 && c.Y == 1);
+        }
+
+        [Test]
         public void Should_Create_Top_Left_Corner_Cell_Which_Knows_Its_Neighbours()
         {
             // 3 x 3 grid of 9 cells
@@ -92,8 +127,14 @@ namespace temporalcohesion.gol.core.tests
 
             // the middle left cell
             var cell = life.Grid[0, 1];
-            
-            cell.GetNeighbours(life.Grid).Count.Should().Be(5);
+            var neighbours = cell.GetNeighbours(life.Grid);
+
+            neighbours.Count.Should().Be(5);
+            neighbours.Should().Contain(c => c.X == 0 && c.Y == 0);
+            neighbours.Should().Contain(c => c.X == 1 && c.Y == 0);
+            neighbours.Should().Contain(c => c.X == 1 && c.Y == 1);
+            neighbours.Should().Contain(c => c.X == 0 && c.Y == 2);
+            neighbours.Should().Contain(c => c.X == 1 && c.Y == 2);
         }
 
         [Test]
@@ -147,6 +188,9 @@ namespace temporalcohesion.gol.core.tests
             life.Grid[1, 0].Alive = true;
             life.Grid[1, 1].Alive = false;
             life.Grid[1, 2].Alive = false;
+            life.Grid[2, 0].Alive = false;
+            life.Grid[2, 1].Alive = false;
+            life.Grid[2, 2].Alive = false;
 
             life.Tick();
 
@@ -163,6 +207,9 @@ namespace temporalcohesion.gol.core.tests
             life.Grid[1, 0].Alive = true;
             life.Grid[1, 1].Alive = false;
             life.Grid[1, 2].Alive = false;
+            life.Grid[2, 0].Alive = false;
+            life.Grid[2, 1].Alive = false;
+            life.Grid[2, 2].Alive = false;
 
             life.Tick();
 
@@ -170,19 +217,111 @@ namespace temporalcohesion.gol.core.tests
         }
 
         [Test]
-        public void Should_Evaluate_Fourth_Rule_Of_Life()
+        public void Should_Evaluate_Fourth_Rule_Of_Life_As_Blinker()
+        {
+            var life = new Life(1, 3);
+            life.Grid[0, 0].Alive = false;
+            life.Grid[0, 1].Alive = false;
+            life.Grid[0, 2].Alive = false;
+            life.Grid[1, 0].Alive = true;
+            life.Grid[1, 1].Alive = true;
+            life.Grid[1, 2].Alive = true;
+            life.Grid[2, 0].Alive = false;
+            life.Grid[2, 1].Alive = false;
+            life.Grid[2, 2].Alive = false;
+
+            life.Tick();
+
+            life.Grid[0, 0].Alive.Should().BeFalse();
+            life.Grid[0, 1].Alive.Should().BeTrue();
+            life.Grid[0, 2].Alive.Should().BeFalse();
+            life.Grid[1, 0].Alive.Should().BeFalse();
+            life.Grid[1, 1].Alive.Should().BeTrue();
+            life.Grid[1, 2].Alive.Should().BeFalse();
+            life.Grid[2, 0].Alive.Should().BeFalse();
+            life.Grid[2, 1].Alive.Should().BeTrue();
+            life.Grid[2, 2].Alive.Should().BeFalse();
+
+            life.Tick();
+
+            life.Grid[0, 0].Alive.Should().BeFalse();
+            life.Grid[0, 1].Alive.Should().BeFalse();
+            life.Grid[0, 2].Alive.Should().BeFalse();
+            life.Grid[1, 0].Alive.Should().BeTrue();
+            life.Grid[1, 1].Alive.Should().BeTrue();
+            life.Grid[1, 2].Alive.Should().BeTrue();
+            life.Grid[2, 0].Alive.Should().BeFalse();
+            life.Grid[2, 1].Alive.Should().BeFalse();
+            life.Grid[2, 2].Alive.Should().BeFalse();
+
+            life.Tick();
+
+            life.Grid[0, 0].Alive.Should().BeFalse();
+            life.Grid[0, 1].Alive.Should().BeTrue();
+            life.Grid[0, 2].Alive.Should().BeFalse();
+            life.Grid[1, 0].Alive.Should().BeFalse();
+            life.Grid[1, 1].Alive.Should().BeTrue();
+            life.Grid[1, 2].Alive.Should().BeFalse();
+            life.Grid[2, 0].Alive.Should().BeFalse();
+            life.Grid[2, 1].Alive.Should().BeTrue();
+            life.Grid[2, 2].Alive.Should().BeFalse();
+        }
+
+        [Test]
+        public void Should_Adhere_To_Life_Rules_Over_Two_Ticks()
         {
             var life = new Life(1, 3);
             life.Grid[0, 0].Alive = true;
             life.Grid[0, 1].Alive = false;
-            life.Grid[0, 2].Alive = true;
+            life.Grid[0, 2].Alive = false;
             life.Grid[1, 0].Alive = true;
-            life.Grid[1, 1].Alive = false;
+            life.Grid[1, 1].Alive = true;
             life.Grid[1, 2].Alive = false;
+            life.Grid[2, 0].Alive = true;
+            life.Grid[2, 1].Alive = true;
+            life.Grid[2, 2].Alive = false;
+            
+            life.Tick();
+            life.Tick();
+
+            life.Grid[1, 0].Alive.Should().BeFalse();
+            life.Grid[1, 1].Alive.Should().BeFalse();
+        }
+
+        [Test]
+        public void Bug_Block_Of_Six_Should_Move()
+        {
+            var life = new Life(1, 5);
+            life.Grid[0, 0].Alive = false;
+            life.Grid[0, 1].Alive = false;
+            life.Grid[0, 2].Alive = false;
+            life.Grid[0, 3].Alive = false;
+            life.Grid[0, 4].Alive = false;
+            life.Grid[1, 0].Alive = false;
+            life.Grid[1, 1].Alive = true;
+            life.Grid[1, 2].Alive = true;
+            life.Grid[1, 3].Alive = false;
+            life.Grid[1, 4].Alive = false;
+            life.Grid[2, 0].Alive = false;
+            life.Grid[2, 1].Alive = true;
+            life.Grid[2, 2].Alive = true;
+            life.Grid[2, 3].Alive = false;
+            life.Grid[2, 4].Alive = false;
+            life.Grid[3, 0].Alive = false;
+            life.Grid[3, 1].Alive = true;
+            life.Grid[3, 2].Alive = true;
+            life.Grid[3, 3].Alive = false;
+            life.Grid[3, 4].Alive = false;
+            life.Grid[4, 0].Alive = false;
+            life.Grid[4, 1].Alive = false;
+            life.Grid[4, 2].Alive = false;
+            life.Grid[4, 3].Alive = false;
+            life.Grid[4, 4].Alive = false;
 
             life.Tick();
 
-            life.Grid[0, 1].Alive.Should().BeTrue();
+            life.Grid[2, 0].Alive.Should().BeTrue();
+            life.Grid[2, 1].Alive.Should().BeFalse();
         }
     }
 }
