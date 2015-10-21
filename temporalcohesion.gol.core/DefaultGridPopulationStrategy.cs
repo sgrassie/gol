@@ -20,12 +20,12 @@ namespace temporalcohesion.gol.core
         {
             var grid = new Cell[x, y];
 
-            for (var i = 0; i < x; i++)
+            for (var yy = 0; yy < y; yy++)
             {
-                for (var j = 0; j < y; j++)
+                for (var xx = 0; xx < x; xx++)
                 {
-                    var cell = new Cell(i, j) { Alive = AliveOrDead(i, j) };
-                    grid[i, j] = cell;
+                    var cell = new Cell(xx, yy) { Alive = AliveOrDead(xx, yy) };
+                    grid[xx, yy] = cell;
                 }
             }
 
@@ -47,12 +47,12 @@ namespace temporalcohesion.gol.core
         {
             var grid = new Cell[x, y];
 
-            for (var i = 0; i < x; i++)
+            for (var yy = 0; yy < y; yy++)
             {
-                for (var j = 0; j < y; j++)
+                for (var xx = 0; xx < x; xx++)
                 {
-                    var cell = new Cell(i, j) { Alive = false };
-                    grid[i, j] = cell;
+                    var cell = new Cell(xx, yy) { Alive = false };
+                    grid[xx, yy] = cell;
                 }
             }
 
@@ -63,11 +63,11 @@ namespace temporalcohesion.gol.core
 
         private void CreateGlider(Cell[,] grid)
         {
-            grid[2, 1].Alive = true;
-            grid[1, 3].Alive = true;
-            grid[2, 3].Alive = true;
+            grid[2, 2].Alive = true;
             grid[3, 3].Alive = true;
-            grid[3, 2].Alive = true;
+            grid[1, 4].Alive = true;
+            grid[2, 4].Alive = true;
+            grid[3, 4].Alive = true;
         }
     }
 
@@ -77,12 +77,12 @@ namespace temporalcohesion.gol.core
         {
             var grid = new Cell[x, y];
 
-            for (var i = 0; i < x; i++)
+            for (var yy = 0; yy < y; yy++)
             {
-                for (var j = 0; j < y; j++)
+                for (var xx = 0; xx < x; xx++)
                 {
-                    var cell = new Cell(i, j) { Alive = false };
-                    grid[i, j] = cell;
+                    var cell = new Cell(xx, yy) { Alive = false };
+                    grid[xx, yy] = cell;
                 }
             }
 
@@ -93,16 +93,16 @@ namespace temporalcohesion.gol.core
 
         private void CreateRow(Cell[,] grid)
         {
-            grid[10, 10].Alive = true;
-            grid[10, 11].Alive = true;
-            grid[10, 12].Alive = true;
-            grid[10, 13].Alive = true;
-            grid[10, 14].Alive = true;
-            grid[10, 15].Alive = true;
-            grid[10, 16].Alive = true;
-            grid[10, 17].Alive = true;
-            grid[10, 18].Alive = true;
-            grid[10, 19].Alive = true;
+            grid[10,10].Alive = true;
+            grid[11,10].Alive = true;
+            grid[12,10].Alive = true;
+            grid[13,10].Alive = true;
+            grid[14,10].Alive = true;
+            grid[15,10].Alive = true;
+            grid[16,10].Alive = true;
+            grid[17,10].Alive = true;
+            grid[18,10].Alive = true;
+            grid[19,10].Alive = true;
         }
     }
 
@@ -112,12 +112,12 @@ namespace temporalcohesion.gol.core
         {
             var grid = new Cell[x, y];
 
-            for (var i = 0; i < x; i++)
+            for (var yy = 0; yy < y; yy++)
             {
-                for (var j = 0; j < y; j++)
+                for (var xx = 0; xx < x; xx++)
                 {
-                    var cell = new Cell(i, j) { Alive = false };
-                    grid[i, j] = cell;
+                    var cell = new Cell(xx, yy) { Alive = false };
+                    grid[xx, yy] = cell;
                 }
             }
 
@@ -168,7 +168,7 @@ namespace temporalcohesion.gol.core
             grid[14, 37].Alive = true;
             grid[15, 36].Alive = true;
             grid[15, 38].Alive = true;
-            grid[16, 36].Alive = true;
+            grid[16, 37].Alive = true;
         }
     }
 }

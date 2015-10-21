@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -330,6 +331,14 @@ namespace temporalcohesion.gol.core.tests
 
             life.Grid[2, 0].Alive.Should().BeTrue();
             life.Grid[2, 1].Alive.Should().BeFalse();
+        }
+
+        [Test]
+        public void Bug_Should_Create_Grid_For_Rectangular_Dimensions_Without_Crashing()
+        {
+            Action create = () => new Life(50, 25, gridPopulationStrategy);
+
+            create.ShouldNotThrow<Exception>();
         }
     }
 }

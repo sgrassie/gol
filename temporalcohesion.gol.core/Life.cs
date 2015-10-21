@@ -60,11 +60,11 @@ namespace temporalcohesion.gol.core
             var xBounds = Grid.GetUpperBound(0);
             var yBounds = Grid.GetUpperBound(1);
 
-            for (var i = 0; i <= xBounds; i++)
+            for (var y = 0; y <= yBounds; y++)
             {
-                for (var j = 0; j <= yBounds; j++)
+                for (var x = 0; x <= xBounds; x++)
                 {
-                    var cell = Grid[i, j];
+                    var cell = Grid[x, y];
                     sb.AppendFormat("{0} ", cell.Alive ? "+" : ".");
                     //sb.AppendFormat("|{0},{1}", cell.X.ToString().PadRight(2), cell.Y.ToString().PadRight(2));
                 }
