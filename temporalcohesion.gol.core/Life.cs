@@ -64,9 +64,9 @@ namespace temporalcohesion.gol.core
             {
                 for (var j = 0; j <= yBounds; j++)
                 {
-                    var cell = Grid[j, i];
+                    var cell = Grid[i, j];
                     sb.AppendFormat("{0} ", cell.Alive ? "+" : ".");
-                    //sb.AppendFormat("|{0},{1}", cell.X, cell.Y);
+                    //sb.AppendFormat("|{0},{1}", cell.X.ToString().PadRight(2), cell.Y.ToString().PadRight(2));
                 }
 
                 sb.AppendLine();
