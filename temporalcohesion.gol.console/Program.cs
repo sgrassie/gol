@@ -40,7 +40,7 @@ namespace temporalcohesion.gol.console
                 Console.WriteLine(life.ToString());
                 Console.WriteLine();
                 Console.WriteLine("{0}/{1}", i+1, _generations);
-                Thread.Sleep(1000);
+                Thread.Sleep(200);
             }
         }
 
@@ -52,6 +52,7 @@ namespace temporalcohesion.gol.console
             {
                 case "glider" : return new GliderPopulationStrategy();
                 case "tencellrow": return new TenCellRowPopulationStrategy();
+                case "gospergun": return new GosperGliderGunPopulationStrategy();
             }
 
             return new DefaultGridPopulationStrategy(new Random(42).Next());
