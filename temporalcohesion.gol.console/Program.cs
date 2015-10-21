@@ -29,6 +29,9 @@ namespace temporalcohesion.gol.console
             var gridStrategy = SelectStrategy();
 
             var life = new Life(_xSize, _ySize, gridStrategy);
+            Console.Clear();
+            Console.WriteLine(life.ToString());
+            Console.WriteLine("0/{0}", _generations);
 
             for (var i = 0; i < _generations; i++)
             {
@@ -44,6 +47,12 @@ namespace temporalcohesion.gol.console
         private static IGridPopulationStrategy SelectStrategy()
         {
             if(_seed > 0 && string.IsNullOrEmpty(_initialPattern)) return new DefaultGridPopulationStrategy(_seed);
+
+            switch (_initialPattern)
+            {
+                case "glider" : return new GliderPopulationStrategy();
+                case "tencellrow": return new TenCellRowPopulationStrategy();
+            }
 
             return new DefaultGridPopulationStrategy(new Random(42).Next());
         }
