@@ -128,47 +128,47 @@ namespace temporalcohesion.gol.core
 
         private void Create(Cell[,] grid)
         {
-            grid[9, 1].Alive = true;
-            grid[9, 2].Alive = true;
-            grid[10, 1].Alive = true;
-            grid[10, 2].Alive = true;
+            grid[2, 10].Alive = true;
+            grid[2, 11].Alive = true;
+            grid[3, 10].Alive = true;
+            grid[3, 11].Alive = true;
 
-            grid[9, 10].Alive = true;
-            grid[9, 11].Alive = true;
-            grid[10, 9].Alive = true;
-            grid[10, 11].Alive = true;
-            grid[11, 9].Alive = true;
             grid[11, 10].Alive = true;
+            grid[12, 10].Alive = true;
+            grid[10, 11].Alive = true;
+            grid[10, 12].Alive = true;
+            grid[12, 11].Alive = true;
+            grid[11, 12].Alive = true;
 
-            grid[11, 17].Alive = true;
-            grid[11, 18].Alive = true;
-            grid[12, 17].Alive = true;
-            grid[12, 19].Alive = true;
-            grid[13, 17].Alive = true;
+            grid[18, 12].Alive = true;
+            grid[18, 13].Alive = true;
+            grid[18, 14].Alive = true;
+            grid[19, 12].Alive = true;
+            grid[20, 13].Alive = true;
 
-            grid[7, 24].Alive = true;
-            grid[7, 25].Alive = true;
-            grid[8, 23].Alive = true;
-            grid[8, 25].Alive = true;
-            grid[9, 23].Alive = true;
-            grid[9, 24].Alive = true;
+            grid[24, 9].Alive = true;
+            grid[24, 10].Alive = true;
+            grid[25, 8].Alive = true;
+            grid[25, 10].Alive = true;
+            grid[26, 8].Alive = true;
+            grid[26, 9].Alive = true;
 
-            grid[19, 25].Alive = true;
-            grid[19, 26].Alive = true;
-            grid[19, 27].Alive = true;
-            grid[20, 25].Alive = true;
-            grid[21, 26].Alive = true;
+            grid[26, 20].Alive = true;
+            grid[26, 21].Alive = true;
+            grid[27, 20].Alive = true;
+            grid[27, 22].Alive = true;
+            grid[28, 20].Alive = true;
 
-            grid[7, 35].Alive = true;
-            grid[7, 36].Alive = true;
-            grid[8, 35].Alive = true;
-            grid[8, 36].Alive = true;
+            grid[36, 8].Alive = true;
+            grid[36, 9].Alive = true;
+            grid[37, 8].Alive = true;
+            grid[37, 9].Alive = true;
 
-            grid[14, 36].Alive = true;
-            grid[14, 37].Alive = true;
-            grid[15, 36].Alive = true;
-            grid[15, 38].Alive = true;
-            grid[16, 37].Alive = true;
+            grid[37, 15].Alive = true;
+            grid[37, 16].Alive = true;
+            grid[37, 17].Alive = true;
+            grid[38, 15].Alive = true;
+            grid[39, 16].Alive = true;
         }
     }
 }
