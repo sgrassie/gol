@@ -4,6 +4,9 @@ namespace temporalcohesion.gol.core
 {
     public class Life
     {
+        private static char EMPTY_BLOCK_CHAR = ' ';
+        private static char FULL_BLOCK_CHAR = '\u2588';
+
         public Life(int x, int y, IGridPopulationStrategy gridPopulationStrategy)
         {
             Grid = gridPopulationStrategy.Populate(x, y);
@@ -88,9 +91,9 @@ namespace temporalcohesion.gol.core
             {
                 for (var x = 0; x <= xBounds; x++)
                 {
-                    var cell = Grid[x, y];
-                    sb.AppendFormat("{0} ", cell ? "+" : ".");
-                    //sb.AppendFormat("|{0},{1}", cell.X.ToString().PadRight(2), cell.Y.ToString().PadRight(2));
+                    var cell = Grid[x, y] ? FULL_BLOCK_CHAR : EMPTY_BLOCK_CHAR;
+                    sb.Append(cell);
+                    sb.Append(cell);
                 }
 
                 sb.AppendLine();

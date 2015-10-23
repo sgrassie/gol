@@ -5,18 +5,14 @@ namespace temporalcohesion.gol.core
     public interface IGridPopulationStrategy
     {
         bool[,] Populate(int x, int y);
+        bool Alive();
     }
 
     public class DefaultGridPopulationStrategy : IGridPopulationStrategy
     {
-        private readonly int _seed;
+        private readonly Random _random = new Random();
 
-        public DefaultGridPopulationStrategy(int seed)
-        {
-            _seed = seed;
-        }
-
-        public bool[,] Populate(int x, int y)
+        public virtual bool[,] Populate(int x, int y)
         {
             var grid = new bool[x, y];
 
@@ -24,39 +20,33 @@ namespace temporalcohesion.gol.core
             {
                 for (var xx = 0; xx < x; xx++)
                 {
-                    grid[xx, yy] = AliveOrDead(xx, yy);
+                    grid[xx, yy] = Alive();
                 }
             }
 
             return grid;
         }
 
-        private bool AliveOrDead(int x, int y)
+        public virtual bool Alive()
         {
-            var random = new Random(_seed);
-
-            return (((x ^ y) + random.Next()) % 5) == 0;
+            return _random.NextDouble() >= 0.5d;
         }
-
     }
 
-    public class GliderPopulationStrategy : IGridPopulationStrategy
+    public class GliderPopulationStrategy : DefaultGridPopulationStrategy
     {
-        public bool[,] Populate(int x, int y)
+        public override bool[,] Populate(int x, int y)
         {
-            var grid = new bool[x, y];
-
-            for (var yy = 0; yy < y; yy++)
-            {
-                for (var xx = 0; xx < x; xx++)
-                {
-                    grid[xx, yy] = false;
-                }
-            }
+            var grid = base.Populate(x, y);
 
             CreateGlider(grid);
 
             return grid;
+        }
+
+        public override bool Alive()
+        {
+            return false;
         }
 
         private void CreateGlider(bool[,] grid)
@@ -69,23 +59,20 @@ namespace temporalcohesion.gol.core
         }
     }
 
-    public class TenCellRowPopulationStrategy : IGridPopulationStrategy
+    public class TenCellRowPopulationStrategy : DefaultGridPopulationStrategy 
     {
-        public bool[,] Populate(int x, int y)
+        public override bool[,] Populate(int x, int y)
         {
-            var grid = new bool[x, y];
-
-            for (var yy = 0; yy < y; yy++)
-            {
-                for (var xx = 0; xx < x; xx++)
-                {
-                    grid[xx, yy] = false;
-                }
-            }
+            var grid = base.Populate(x, y);
 
             CreateRow(grid);
 
             return grid;
+        }
+
+        public override bool Alive()
+        {
+            return false;
         }
 
         private void CreateRow(bool[,] grid)
@@ -103,23 +90,20 @@ namespace temporalcohesion.gol.core
         }
     }
 
-    public class GosperGliderGunPopulationStrategy : IGridPopulationStrategy
+    public class GosperGliderGunPopulationStrategy : DefaultGridPopulationStrategy
     {
-        public bool[,] Populate(int x, int y)
+        public override bool[,] Populate(int x, int y)
         {
-            var grid = new bool[x, y];
-
-            for (var yy = 0; yy < y; yy++)
-            {
-                for (var xx = 0; xx < x; xx++)
-                {
-                    grid[xx, yy] = false;
-                }
-            }
+            var grid = base.Populate(x, y);
 
             Create(grid);
 
             return grid;
+        }
+
+        public override bool Alive()
+        {
+            return false;
         }
 
         private void Create(bool[,] grid)

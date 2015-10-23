@@ -8,18 +8,18 @@ namespace temporalcohesion.gol.core.tests
     [TestFixture]
     public class LifeTests
     {
-        private IGridPopulationStrategy gridPopulationStrategy;
+        private IGridPopulationStrategy _gridPopulationStrategy;
         
         [SetUp]
         public void Setup()
         {
-            gridPopulationStrategy = new DefaultGridPopulationStrategy(32);
+            _gridPopulationStrategy = new DefaultGridPopulationStrategy();
         }
 
         [Test]
         public void Should_Initialise_Life_Wtih_Default_HundredByHundred_Grid()
         {
-            var life = new Life(100, 100, gridPopulationStrategy);
+            var life = new Life(100, 100, _gridPopulationStrategy);
 
             life.Grid.Length.Should().Be(10000);
         }
@@ -27,7 +27,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Initialise_Grid_With_Custom_Size()
         {
-            var life = new Life(10, 10, gridPopulationStrategy);
+            var life = new Life(10, 10, _gridPopulationStrategy);
 
             life.Grid.Length.Should().Be(100);
         }
@@ -35,18 +35,20 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Create_Cells_Which_Are_And_Dead()
         {
-            var life = new Life(3, 3, gridPopulationStrategy);
+            var life = new Life(3, 3, _gridPopulationStrategy);
 
             var list = life.Grid.Cast<bool>().ToList();
+            var aliveCount = list.Count(x => x);
+            var deadCount = list.Count(x => x != true);
 
-            list.Count(x => x).Should().BeGreaterThan(0);
-            list.Count(x => !x).Should().BeGreaterThan(0);
+            aliveCount.Should().BeGreaterThan(0);
+            deadCount.Should().BeGreaterThan(0);
         }
 
         [Test]
         public void Should_Evaluate_First_Rule_Of_Life()
         {
-            var life = new Life(3, 3, gridPopulationStrategy);
+            var life = new Life(3, 3, _gridPopulationStrategy);
             life.Grid[0, 0] = true;
             life.Grid[0, 1] = true;
             life.Grid[0, 2] = false;
@@ -65,7 +67,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Evaluate_Second_Rule_Of_Life()
         {
-            var life = new Life(3, 3, gridPopulationStrategy);
+            var life = new Life(3, 3, _gridPopulationStrategy);
             life.Grid[0, 0] = true;
             life.Grid[0, 1] = true;
             life.Grid[0, 2] = true;
@@ -85,7 +87,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Evaluate_Third_Rule_Of_Life_For_Two_Neighbours()
         {
-            var life = new Life(3, 3, gridPopulationStrategy);
+            var life = new Life(3, 3, _gridPopulationStrategy);
             life.Grid[0, 0] = true;
             life.Grid[0, 1] = true;
             life.Grid[0, 2] = false;
@@ -104,7 +106,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Evaluate_Third_Rule_Of_Life_For_Three_Neighbours()
         {
-            var life = new Life(3, 3, gridPopulationStrategy);
+            var life = new Life(3, 3, _gridPopulationStrategy);
             life.Grid[0, 0] = true;
             life.Grid[0, 1] = true;
             life.Grid[0, 2] = true;
@@ -123,7 +125,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Evaluate_Fourth_Rule_Of_Life_As_Blinker()
         {
-            var life = new Life(3, 3, gridPopulationStrategy);
+            var life = new Life(3, 3, _gridPopulationStrategy);
             life.Grid[0, 0] = false;
             life.Grid[0, 1] = false;
             life.Grid[0, 2] = false;
@@ -174,7 +176,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Should_Adhere_To_Life_Rules_Over_Two_Ticks()
         {
-            var life = new Life(3, 3, gridPopulationStrategy);
+            var life = new Life(3, 3, _gridPopulationStrategy);
             life.Grid[0, 0] = true;
             life.Grid[0, 1] = false;
             life.Grid[0, 2] = false;
@@ -195,7 +197,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Bug_Block_Of_Six_Should_Move()
         {
-            var life = new Life(5, 5, gridPopulationStrategy);
+            var life = new Life(5, 5, _gridPopulationStrategy);
             life.Grid[0, 0] = false;
             life.Grid[0, 1] = false;
             life.Grid[0, 2] = false;
@@ -231,7 +233,7 @@ namespace temporalcohesion.gol.core.tests
         [Test]
         public void Bug_Should_Create_Grid_For_Rectangular_Dimensions_Without_Crashing()
         {
-            Action create = () => new Life(50, 25, gridPopulationStrategy);
+            Action create = () => new Life(50, 25, _gridPopulationStrategy);
 
             create.ShouldNotThrow<Exception>();
         }
