@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 
 namespace temporalcohesion.gol.core
 {
@@ -10,47 +9,72 @@ namespace temporalcohesion.gol.core
             Grid = gridPopulationStrategy.Populate(x, y);
         }
 
-        public Cell[,] Grid { get; set; }
+        public bool[,] Grid { get; set; }
 
         public void Tick()
         {
-            var nextGrid = new Cell[Grid.GetUpperBound(0)+1, Grid.GetUpperBound(1)+1];
+            var nextGrid = new bool[Grid.GetUpperBound(0)+1, Grid.GetUpperBound(1)+1];
 
-            foreach (var cell in Grid)
+            var xBounds = Grid.GetUpperBound(0);
+            var yBounds = Grid.GetUpperBound(1);
+
+            for (var y = 0; y <= yBounds; y++)
             {
-                var copy = CreateCopy(Grid);
-                var cellCopy = copy[cell.X, cell.Y];
-                var neighbours = copy[cellCopy.X, cellCopy.Y].GetNeighbours(copy);
+                for (var x = 0; x <= xBounds; x++)
+                {
+                    var count = CountAliveNeighbours(x, y);
 
-                if (neighbours.Count(x => x.Alive) < 2)
-                {
-                    cellCopy.Alive = false;
+                    if (count < 2)
+                    {
+                        nextGrid[x, y] = false;
+                    }
+                    else if (count > 3)
+                    {
+                        nextGrid[x, y] = false;
+                    }
+                    else if (count == 3)
+                    {
+                        nextGrid[x, y] = true;
+                    }
+                    else
+                    {
+                        nextGrid[x, y] = Grid[x, y];
+                    }
                 }
-                else if (neighbours.Count(x => x.Alive) > 3)
-                {
-                    cellCopy.Alive = false;
-                }
-                else if (neighbours.Count(x => x.Alive) == 3)
-                {
-                    cellCopy.Alive = true;
-                }
-
-                nextGrid[cellCopy.X, cellCopy.Y] = cellCopy;
             }
 
             Grid = nextGrid;
         }
 
-        private Cell[,] CreateCopy(Cell[,] grid)
+        private int CountAliveNeighbours(int x, int y)
         {
-            var copy= new Cell[Grid.GetUpperBound(0)+1, Grid.GetUpperBound(1)+1];
+            var width = Grid.GetUpperBound(0)+1;
+            var height = Grid.GetUpperBound(1)+1;
+            var value = 0;
 
-            foreach (var cell in grid)
+            for (var j = -1; j <= 1; j++)
             {
-                copy[cell.X, cell.Y] = new Cell(cell.X, cell.Y) { Alive = cell.Alive };
+                if ((y + j) < 0 || y + j >= height)
+                {
+                    continue;
+                }
+
+                var k = (y + j + height) % height;
+
+                for (var i = -1; i <= 1; i++)
+                {
+                    if (x + i < 0 || x + i >= width)
+                    {
+                        continue;
+                    }
+
+                    var h = (x + i + width) % width;
+
+                    value += Grid[h, k] ? 1 : 0;
+                }
             }
 
-            return copy;
+            return value - (Grid[x, y] ? 1 : 0);
         }
 
         public override string ToString()
@@ -65,7 +89,7 @@ namespace temporalcohesion.gol.core
                 for (var x = 0; x <= xBounds; x++)
                 {
                     var cell = Grid[x, y];
-                    sb.AppendFormat("{0} ", cell.Alive ? "+" : ".");
+                    sb.AppendFormat("{0} ", cell ? "+" : ".");
                     //sb.AppendFormat("|{0},{1}", cell.X.ToString().PadRight(2), cell.Y.ToString().PadRight(2));
                 }
 
